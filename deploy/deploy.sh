@@ -19,6 +19,7 @@ mkdir -p "$POSTIZ_ROOT/data/config" "$POSTIZ_ROOT/data/uploads" "$POSTIZ_ROOT/da
   "$POSTIZ_ROOT/backups"
 chown 1000:0 "$POSTIZ_ROOT/data/elasticsearch"
 chmod 770 "$POSTIZ_ROOT/data/elasticsearch"
+chmod 755 "$POSTIZ_ROOT/data/uploads"
 chmod 600 .env
 docker stack config --compose-file stack.yml >/dev/null
 docker stack deploy --compose-file stack.yml --resolve-image never app-postiz
