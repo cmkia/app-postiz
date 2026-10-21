@@ -144,12 +144,14 @@ services:
       ES_SEEDS: elasticsearch
       ES_VERSION: v7
       TEMPORAL_NAMESPACE: default
+      TEMPORAL_ADDRESS: 127.0.0.1:7233
+      BIND_ON_IP: 0.0.0.0
     configs:
       - source: temporal-dynamic
         target: /etc/temporal/config/dynamicconfig/production-sql.yaml
     networks: [backend]
     healthcheck:
-      test: [CMD, temporal, operator, cluster, health, --address, 'temporal:7233']
+      test: [CMD, temporal, operator, cluster, health, --address, '127.0.0.1:7233']
       interval: 20s
       timeout: 10s
       start_period: 120s
