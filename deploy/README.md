@@ -12,6 +12,8 @@ O endereço efetivo fica em `POSTIZ_DOMAIN` no ambiente privado. Antes de cadast
 callbacks OAuth, concluir o DNS próprio e atualizar o domínio da aplicação.
 O nginx adapta o domínio dos cookies ao hostname exato da aplicação, evitando
 cookies no domínio compartilhado do serviço DNS temporário.
+A página de login bloqueia o envio nativo de formulário enquanto o JavaScript
+carrega; o login normal usa fetch. Logs HTTP registram o caminho sem parâmetros.
 
 ## Implantação
 

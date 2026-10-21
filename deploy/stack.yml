@@ -163,6 +163,7 @@ services:
 
 configs:
   postiz-nginx:
+    name: app-postiz-nginx-v2
     file: ./nginx.conf
   temporal-dynamic:
     file: ./temporal-dynamic.yml
