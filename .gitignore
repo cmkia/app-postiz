@@ -5,6 +5,12 @@ dist
 tmp
 /out-tsc
 .env
+.env.*
+!.env.example
+!deploy/.env.example
+deploy/*.private.*
+deploy/backups/
+deploy/data/
 .apple
 # dependencies
 node_modules

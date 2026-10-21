@@ -21,3 +21,11 @@ dist
 .git
 .github
 reports
+.env
+.env.*
+**/.env
+**/.env.*
+.secrets
+deploy/data
+deploy/backups
+deploy/*.private.*
