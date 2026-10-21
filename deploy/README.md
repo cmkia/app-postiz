@@ -10,6 +10,8 @@ Enquanto o DNS próprio aguarda autenticação Cloudflare, o primeiro acesso pod
 https://postiz.144-91-77-185.sslip.io (DNS público apontando ao mesmo IP Contabo).
 O endereço efetivo fica em `POSTIZ_DOMAIN` no ambiente privado. Antes de cadastrar
 callbacks OAuth, concluir o DNS próprio e atualizar o domínio da aplicação.
+O nginx adapta o domínio dos cookies ao hostname exato da aplicação, evitando
+cookies no domínio compartilhado do serviço DNS temporário.
 
 ## Implantação
 

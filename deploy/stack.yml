@@ -34,6 +34,9 @@ services:
     volumes:
       - ${POSTIZ_ROOT}/data/config:/config
       - ${POSTIZ_ROOT}/data/uploads:/uploads
+    configs:
+      - source: postiz-nginx
+        target: /etc/nginx/nginx.conf
     networks: [backend, traefik-proxy]
     healthcheck:
       test: [CMD, node, -e, "require('http').get('http://localhost:5000/api/auth/can-register',r=>process.exit(r.statusCode===200?0:1)).on('error',()=>process.exit(1))"]
@@ -157,6 +160,8 @@ services:
         limits: {memory: 1G, cpus: '0.75'}
 
 configs:
+  postiz-nginx:
+    file: ./nginx.conf
   temporal-dynamic:
     file: ./temporal-dynamic.yml
 
