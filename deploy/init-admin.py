@@ -16,8 +16,10 @@ container = subprocess.check_output([
 ], text=True).strip()
 if not container or '\n' in container:
     raise SystemExit('Expected one running Postiz app container.')
+environment = dict(line.split('=', 1) for line in (root / '.env').read_text().splitlines()
+                   if line and not line.startswith('#') and '=' in line)
 credentials = {
-    'url': 'https://postiz.cmkia.com',
+    'url': 'https://' + environment['POSTIZ_DOMAIN'],
     'email': 'adm@cmkia.com',
     'password': secrets.token_urlsafe(24),
 }

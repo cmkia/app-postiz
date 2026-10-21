@@ -6,6 +6,11 @@ Produção: https://postiz.cmkia.com — servidor Contabo existente, stack `app-
 Esta pasta adapta a composição oficial para o Docker Swarm e Traefik já instalados.
 Não altera o n8n nem usa bancos ou credenciais de clientes existentes.
 
+Enquanto o DNS próprio aguarda autenticação Cloudflare, o primeiro acesso pode usar
+https://postiz.144-91-77-185.sslip.io (DNS público apontando ao mesmo IP Contabo).
+O endereço efetivo fica em `POSTIZ_DOMAIN` no ambiente privado. Antes de cadastrar
+callbacks OAuth, concluir o DNS próprio e atualizar o domínio da aplicação.
+
 ## Implantação
 
 Arquivos desta pasta em `/opt/app-postiz`, com `.env` privado de modo 600.
