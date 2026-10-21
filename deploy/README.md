@@ -7,9 +7,27 @@ Esta pasta adapta a composição oficial para o Docker Swarm e Traefik já insta
 Não altera o n8n nem usa bancos ou credenciais de clientes existentes.
 
 O endereço principal é https://postiz.cmkia.com. O registro A exato aponta para
-144.91.77.185, com DNS-only no Cloudflare, preservando a renovação TLS-ALPN do
-Traefik. Antes de habilitar proxy/CDN, configurar um método de renovação compatível.
+144.91.77.185, com proxy/CDN Cloudflare. O resolver exclusivo `postiz-http` usa
+HTTP-01 na porta80, compatível com o proxy, e armazena certificados em
+`/letsencrypt/postiz-http.json`. O resolver TLS-ALPN dos demais serviços permanece.
 Não alterar o SSL global da zona para esta aplicação.
+
+O Traefik compartilhado precisa destes argumentos adicionais, preservando todos os
+existentes. Executar `python3 configure-traefik.py` no manager configura esses
+argumentos de forma idempotente; reaplicar após recriar o Traefik a partir de uma
+composição antiga que ainda não os contenha:
+
+```text
+--certificatesresolvers.postiz-http.acme.httpchallenge.entrypoint=web
+--certificatesresolvers.postiz-http.acme.email=adm@cmkia.com
+--certificatesresolvers.postiz-http.acme.storage=/letsencrypt/postiz-http.json
+```
+
+Manter `/.well-known/acme-challenge/` acessível em HTTP para renovação. O redirect
+HTTP→HTTPS do Traefik é compatível. Não criar cache de HTML/API autenticados;
+Cloudflare usa cache padrão dos arquivos estáticos versionados. O proxy do plano
+atual limita uploads individuais a100MB; vídeos maiores precisam de fluxo próprio
+antes do uso. Não confundir esse limite com os2GB aceitos pelo nginx de origem.
 
 https://postiz.144-91-77-185.sslip.io foi usado somente na implantação inicial;
 o hostname efetivo fica em `POSTIZ_DOMAIN` no ambiente privado. Cadastrar os
@@ -31,6 +49,7 @@ do commit revisado e substituir `POSTIZ_IMAGE` pela imagem própria com digest.
 ```sh
 cd /opt/app-postiz
 # Preencher .env a partir de .env.example, sem imprimir valores em diagnósticos.
+python3 configure-traefik.py
 sh deploy.sh
 docker stack services app-postiz
 ```

@@ -54,7 +54,7 @@ services:
         traefik.http.routers.postiz.rule: Host(`${POSTIZ_DOMAIN}`)
         traefik.http.routers.postiz.entrypoints: websecure
         traefik.http.routers.postiz.tls: 'true'
-        traefik.http.routers.postiz.tls.certresolver: letsencrypt
+        traefik.http.routers.postiz.tls.certresolver: postiz-http
         traefik.http.routers.postiz.service: postiz
         traefik.http.services.postiz.loadbalancer.server.port: '5000'
 
